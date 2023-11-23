@@ -1,0 +1,37 @@
+{
+  "name": "marp-template",
+  "version": "1.0.0",
+  "description": "A boilerplate for Marp-based presentations.",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/josephcarey/marp-template.git"
+  },
+  "author": "Joseph Carey",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/josephcarey/marp-template/issues"
+  },
+  "homepage": "https://github.com/josephcarey/marp-template#readme",
+  "scripts": {
+    "build:all": "npm run clean && npm run build:html && npm run build:pdf && npm run build:pp",
+    "build:html": "marp && npm run copy-images",
+    "build:pdf": "marp --pdf",
+    "build:pp": "marp --pptx",
+    "clean": "shx rm -rf dist",
+    "copy-images": "shx cp -r src/images dist/images",
+    "preview": "marp --preview",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch:html": "marp --watch"
+  },
+  "devDependencies": {
+    "@marp-team/marp-cli": "^3.4.0",
+    "shx": "^0.3.4"
+  },
+  "marp": {
+    "allowLocalFiles": true,
+    "inputDir": "src",
+    "output": "dist",
+    "html": true
+  }
+}
