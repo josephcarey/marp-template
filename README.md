@@ -4,6 +4,10 @@ A boilerplate for building presentations with [Marp](https://marp.app/), powered
 [Marp CLI **v4**](https://github.com/marp-team/marp-cli). Write slides in Markdown
 (`src/slides.md`) and export to HTML, PDF, and PowerPoint in `dist/`.
 
+Themes and layouts come from the shared
+[`marp-theme-kit`](https://github.com/josephcarey/marp-theme-kit) library, consumed as a
+devDependency — so decks across the studio share one design system.
+
 ## Requirements
 
 - **Node.js 18+** (required by Marp CLI v4; Node 16 is no longer supported)
@@ -29,28 +33,98 @@ dist/           # Build output (generated; not committed)
 
 ## Build scripts
 
-| Script              | Description                                               |
-| ------------------- | -------------------------------------------------------- |
-| `npm run build:html`  | Build `dist/slides.html` and copy images into `dist/`.   |
-| `npm run build:pdf`   | Build `dist/slides.pdf`.                                  |
-| `npm run build:pptx`  | Build `dist/slides.pptx` (PowerPoint).                   |
-| `npm run build:all`   | Clean, then build HTML, PDF, and PPTX.                    |
-| `npm run watch:html`  | Rebuild HTML on changes.                                  |
-| `npm run preview`     | Open the Marp preview window.                             |
-| `npm run clean`       | Remove the `dist/` directory.                            |
+| Script               | Description                                              |
+| -------------------- | -------------------------------------------------------- |
+| `npm run build:html` | Build `dist/slides.html` and copy images into `dist/`.   |
+| `npm run build:pdf`  | Build `dist/slides.pdf`.                                  |
+| `npm run build:pptx` | Build `dist/slides.pptx` (PowerPoint).                   |
+| `npm run build:all`  | Clean, then build HTML, PDF, and PPTX.                    |
+| `npm run watch:html` | Rebuild HTML on changes.                                 |
+| `npm run preview`    | Open the Marp preview window.                            |
+| `npm run clean`      | Remove the `dist/` directory.                            |
 
-Marp configuration (input/output directories, local-file access, HTML support)
-lives in the `marp` block of `package.json`.
+Marp configuration (local-file access, HTML support) lives in the `marp` block of
+`package.json`.
 
-## Authoring notes
+## The theme kit
 
-- The deck uses Marp's built-in `gaia` theme (inverted) at `16:9`.
-- Multi-column layouts use the `.columns2` / `.columns3` CSS grid utilities
-  defined in the front-matter `style:` block of `src/slides.md`.
-- Marp v4 renders each slide as a `display: block` container and supports
-  CSS nesting, so inline styles can be written in a cleaner, nested form.
+This template gets its look from the published
+[`marp-theme-kit`](https://github.com/josephcarey/marp-theme-kit) library, pinned in
+`package.json`:
+
+```json
+"devDependencies": {
+  "marp-theme-kit": "github:josephcarey/marp-theme-kit#v0.1.0"
+}
+```
+
+The kit ships a committed `dist/` of compiled themes, so a plain `npm install` populates
+`node_modules/marp-theme-kit/dist/*.css` with no build step. The build scripts register
+that whole directory as a theme set via Marp's `--theme-set` flag:
+
+```sh
+marp src/slides.md --theme-set node_modules/marp-theme-kit/dist -o dist/slides.html
+```
+
+> **Note:** `--theme-set` is a greedy CLI option, so the input path (`src/slides.md`)
+> must come **first** or it gets swallowed by the flag.
+
+### Switching themes
+
+Pick a theme by name in the front-matter of `src/slides.md`:
+
+```yaml
+---
+marp: true
+theme: brand
+---
+```
+
+Available themes from the kit:
+
+| Theme            | Kind   | Layout classes |
+| ---------------- | ------ | -------------- |
+| `brand`          | Custom | Full support   |
+| `base`           | Foundation (imported by custom themes; not usually selected directly) | — |
+| `rose-pine`      | Skin   | Skin only      |
+| `rose-pine-dawn` | Skin   | Skin only      |
+| `graph-paper`    | Skin   | Skin only      |
+| `academic`       | Skin   | Skin only      |
+| `palladium`      | Skin   | Skin only      |
+
+The vendored skins restyle colors and type but do **not** implement the layout contract
+below — those classes are a feature of the custom `brand` theme.
+
+## Layout contract
+
+The `brand` theme exposes a small set of reusable slide layouts. Apply one per slide with
+a `_class` directive (`<!-- _class: name -->`). A plain title + bullets slide needs no
+class — that is the unstyled baseline.
+
+| `_class`    | Use for                       | Expected markup                                              |
+| ----------- | ----------------------------- | ----------------------------------------------------------- |
+| `lead`      | Centered title slide          | `# Title` + a paragraph subtitle                            |
+| `statement` | One big centered punchline     | `# A bold **statement**`                                    |
+| `cols-2`    | Two-column flow               | `# Heading` then a single bullet list (flows into 2 cols)   |
+| `cols-3`    | Three-column flow             | `# Heading` then a single bullet list (flows into 3 cols)   |
+| `compare`   | Two labeled columns           | `# Title`, then exactly two `## Label` headings each with a list |
+| `closing`   | Quiet thank-you / "Questions?" | `# Questions?`                                              |
+| `tight`     | Utility: shrink type for dense slides | Combine with a layout, e.g. `<!-- _class: cols-2 tight -->` |
+
+Notes:
+
+- `cols-2` / `cols-3` use real CSS columns — write one normal list and headings span all
+  columns automatically. No `<div>` wrappers needed.
+- `compare` expects **exactly two** `##` headings (the second one breaks into the right
+  column). Don't nest extra `##` subheads inside a compare column.
+- Image-background slides use Marp's built-in directives, e.g.
+  `![bg right:40%](images/foo.jpg)` or `![bg fit](images/bar.jpg)`, and work with any
+  theme.
+- Suppress pagination on individual slides (e.g. title / closing) with
+  `<!-- _paginate: false -->`.
+
+`src/slides.md` ships as a worked example of every layout above.
 
 ## License
 
 MIT — see [LICENSE](LICENSE).
-

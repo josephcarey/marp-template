@@ -1,30 +1,12 @@
 ---
 marp: true
-theme: gaia
-class:
-  - invert
+theme: brand
 size: 16:9
-# auto-scaling: true
-# paginate: true
-
-style: |
-  /* Multi-column layout utilities (scoped to slides via CSS nesting, Marp v4+) */
-  section {
-    .columns2,
-    .columns3 {
-      display: grid;
-      gap: 1rem;
-    }
-    .columns2 {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-    .columns3 {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-    }
-  }
+paginate: true
 ---
 
-<!-- _class: lead invert -->
+<!-- _class: lead -->
+<!-- _paginate: false -->
 
 # Title Slide
 
@@ -32,43 +14,39 @@ Subtitle Here
 
 ---
 
-# Inverted Color
+<!-- _class: statement -->
+<!-- _paginate: false -->
 
-<!-- _class: -->
+# **Trafalgar**, 21 October 1805
+
+---
+
+# Background Image (Right)
 
 ![bg right:65%](images/age-of-sail.jpg)
-
-<style scoped>
-     /* section { font-size: 2rem; } */
-</style>
 
 - Point 1
 - Point 2
 - Point 3
 - Lead-up
 
-<!-- Presentater note. -->
+<!-- Presenter note. -->
 
 ---
 
-# Left Image Slide
+# Background Image (Left)
 
 ![bg left:40%](images/ships1.jpg)
-
-<!-- Font-size control -->
-<style scoped>
-     /* section { font-size: 2rem; } */
-</style>
 
 - Point 1
 - Point 2
 - Point 3
 
-<!-- Presentater note. -->
+<!-- Presenter note. -->
 
 ---
 
-# Right Image Slide
+# Background Image (Narrow)
 
 ![bg right:30%](images/napoleon.jpg)
 
@@ -76,75 +54,54 @@ Subtitle Here
 - Point 2
 - Point 3
 
-<!-- Presentater note. -->
+<!-- Presenter note. -->
 
 ---
 
-# Two Column Layout
+<!-- _class: cols-2 -->
 
-<div class="columns2">
-
-<div>
-
-### Column 1
+# Two Columns
 
 - Point 1
 - Point 2
 - Point 3
-  <!-- Presenter note. -->
-
-</div>
-
-<div>
-
-### Column 2
-
 - Point 4
 - Point 5
 - Point 6
-  <!-- Presenter note. -->
-
-</div>
-</div>
 
 ---
 
-# Three Column Layout
+<!-- _class: cols-3 -->
 
-<div class="columns3">
-
-<div>
-
-### Column 1
+# Three Columns
 
 - Point 1
 - Point 2
 - Point 3
-  <!-- Presenter note. -->
-
-</div>
-
-<div>
-
-### Column 2
-
 - Point 4
 - Point 5
 - Point 6
-  <!-- Presenter note. -->
-
-</div>
-<div>
-
-### Column 3
-
 - Point 7
 - Point 8
 - Point 9
-  <!-- Presenter note. -->
 
-</div>
-</div>
+---
+
+<!-- _class: compare -->
+
+# Two Fleets
+
+## Royal Navy
+
+- 27 ships of the line
+- Held the weather gage
+- Nelson commanding
+
+## Combined Fleet
+
+- 33 ships of the line
+- Single defensive line
+- Villeneuve commanding
 
 ---
 
@@ -157,21 +114,15 @@ Subtitle Here
 
 ---
 
-<!-- Image with fit -->
-
 ![bg fit](images/hms-victory.jpg)
 
 <!-- HMS Victory in dry dock. 104-guns, first-rate. -->
 
 ---
 
-# Size Control
+<!-- _class: tight -->
 
-<style scoped>
-  section {
-    font-size: 2rem;
-  }
-</style>
+# Dense Content
 
 - Point 1
 - Point 2
@@ -185,6 +136,7 @@ Subtitle Here
 
 ---
 
-# Questions?
+<!-- _class: closing -->
+<!-- _paginate: false -->
 
-  <!-- That's my presentation about British Seamen! -->
+# Questions?

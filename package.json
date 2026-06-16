@@ -18,23 +18,22 @@
   "homepage": "https://github.com/josephcarey/marp-template#readme",
   "scripts": {
     "build:all": "npm run clean && npm run build:html && npm run build:pdf && npm run build:pptx",
-    "build:html": "marp && npm run copy-images",
-    "build:pdf": "marp --pdf",
-    "build:pptx": "marp --pptx",
+    "build:html": "marp src/slides.md --theme-set node_modules/marp-theme-kit/dist -o dist/slides.html && npm run copy-images",
+    "build:pdf": "marp src/slides.md --theme-set node_modules/marp-theme-kit/dist --pdf -o dist/slides.pdf",
+    "build:pptx": "marp src/slides.md --theme-set node_modules/marp-theme-kit/dist --pptx -o dist/slides.pptx",
     "clean": "shx rm -rf dist",
     "copy-images": "shx cp -r src/images dist/images",
-    "preview": "marp --preview",
+    "preview": "marp src/slides.md --theme-set node_modules/marp-theme-kit/dist --preview",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "watch:html": "marp --watch"
+    "watch:html": "marp src/slides.md --theme-set node_modules/marp-theme-kit/dist -o dist/slides.html --watch"
   },
   "devDependencies": {
     "@marp-team/marp-cli": "^4.4.0",
+    "marp-theme-kit": "github:josephcarey/marp-theme-kit#v0.1.0",
     "shx": "^0.3.4"
   },
   "marp": {
     "allowLocalFiles": true,
-    "inputDir": "src",
-    "output": "dist",
     "html": true
   }
 }
