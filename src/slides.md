@@ -8,15 +8,19 @@ size: 16:9
 # paginate: true
 
 style: |
-  .columns2 {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 1rem;
-  }
-  .columns3 {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 1rem;
+  /* Multi-column layout utilities (scoped to slides via CSS nesting, Marp v4+) */
+  section {
+    .columns2,
+    .columns3 {
+      display: grid;
+      gap: 1rem;
+    }
+    .columns2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .columns3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
   }
 ---
 
@@ -35,7 +39,7 @@ Subtitle Here
 ![bg right:65%](images/age-of-sail.jpg)
 
 <style scoped>
-     /* { font-size: 2rem } */
+     /* section { font-size: 2rem; } */
 </style>
 
 - Point 1
@@ -53,7 +57,7 @@ Subtitle Here
 
 <!-- Font-size control -->
 <style scoped>
-     /* { font-size: 2rem } */
+     /* section { font-size: 2rem; } */
 </style>
 
 - Point 1
@@ -164,7 +168,9 @@ Subtitle Here
 # Size Control
 
 <style scoped>
-     { font-size: 2rem }
+  section {
+    font-size: 2rem;
+  }
 </style>
 
 - Point 1
