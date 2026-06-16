@@ -9,15 +9,18 @@
   },
   "author": "Joseph Carey",
   "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
   "bugs": {
     "url": "https://github.com/josephcarey/marp-template/issues"
   },
   "homepage": "https://github.com/josephcarey/marp-template#readme",
   "scripts": {
-    "build:all": "npm run clean && npm run build:html && npm run build:pdf && npm run build:pp",
+    "build:all": "npm run clean && npm run build:html && npm run build:pdf && npm run build:pptx",
     "build:html": "marp && npm run copy-images",
     "build:pdf": "marp --pdf",
-    "build:pp": "marp --pptx",
+    "build:pptx": "marp --pptx",
     "clean": "shx rm -rf dist",
     "copy-images": "shx cp -r src/images dist/images",
     "preview": "marp --preview",
@@ -25,7 +28,7 @@
     "watch:html": "marp --watch"
   },
   "devDependencies": {
-    "@marp-team/marp-cli": "^3.4.0",
+    "@marp-team/marp-cli": "^4.4.0",
     "shx": "^0.3.4"
   },
   "marp": {
