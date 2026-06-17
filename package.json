@@ -29,7 +29,7 @@
   },
   "devDependencies": {
     "@marp-team/marp-cli": "^4.4.0",
-    "marp-theme-kit": "github:josephcarey/marp-theme-kit#v0.1.0",
+    "marp-theme-kit": "github:josephcarey/marp-theme-kit#v0.3.0",
     "shx": "^0.3.4"
   },
   "marp": {

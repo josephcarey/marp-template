@@ -71,6 +71,35 @@ Subtitle Here
 
 ---
 
+<!-- _class: cols-2 -->
+
+# Manual Column Break
+
+The `col-break` utility forces the next item into a new column. Drop an empty
+`<div class="col-break"></div>` where the split should happen (needs HTML enabled).
+
+- Stays in column one
+- Also column one
+
+<div class="col-break"></div>
+
+- Pushed to column two
+- Also column two
+
+---
+
+<!-- _class: invert -->
+
+# Dark Mode
+
+Add `class: invert` (front-matter) or `<!-- _class: invert -->` (per slide) for a
+dark variant. The accent color stays; everything else flips.
+
+- Combinable with any layout, e.g. `_class: cols-2 invert`
+- Provided by the kit's `base` layer, so it works on any custom theme
+
+---
+
 <!-- _class: cols-3 -->
 
 # Three Columns

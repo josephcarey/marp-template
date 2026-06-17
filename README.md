@@ -54,7 +54,7 @@ This template gets its look from the published
 
 ```json
 "devDependencies": {
-  "marp-theme-kit": "github:josephcarey/marp-theme-kit#v0.1.0"
+  "marp-theme-kit": "github:josephcarey/marp-theme-kit#v0.3.0"
 }
 ```
 
@@ -68,6 +68,48 @@ marp src/slides.md --theme-set node_modules/marp-theme-kit/dist -o dist/slides.h
 
 > **Note:** `--theme-set` is a greedy CLI option, so the input path (`src/slides.md`)
 > must come **first** or it gets swallowed by the flag.
+
+### VS Code preview
+
+The `--theme-set` flag only wires up the **CLI** builds — it does nothing for the
+**VS Code Marp preview** (the [Marp for VS Code](https://marketplace.visualstudio.com/items?itemName=marp-team.marp-vscode)
+extension). The preview is configured separately via `.vscode/settings.json`, which is
+committed so the preview works out of the box:
+
+```jsonc
+{
+  // Register each kit theme explicitly — the extension accepts files, not directories,
+  // so the whole dist/ can't be pointed at like --theme-set does.
+  "markdown.marp.themes": [
+    "./node_modules/marp-theme-kit/dist/base.css",
+    "./node_modules/marp-theme-kit/dist/brand.css",
+    "./node_modules/marp-theme-kit/dist/academic.css",
+    "./node_modules/marp-theme-kit/dist/graph-paper.css",
+    "./node_modules/marp-theme-kit/dist/palladium.css",
+    "./node_modules/marp-theme-kit/dist/rose-pine.css",
+    "./node_modules/marp-theme-kit/dist/rose-pine-dawn.css"
+  ],
+  // Enable raw HTML (e.g. the col-break <div>) in the preview. "all" is required:
+  // "default" only allows Marp's built-in HTML allowlist, which excludes <div>.
+  "markdown.marp.html": "all"
+}
+```
+
+Two details matter:
+
+- **`base.css` must be listed.** The custom themes do `@import 'base'`, which Marp
+  resolves by the registered theme _name_ (`base`), not by a relative file path. If
+  `base.css` isn't registered, `theme: brand` renders without the layout contract in the
+  preview.
+- **`markdown.marp.html: "all"` is required** for the `col-break` utility's raw
+  `<div class="col-break"></div>` to render in the preview. This setting is an enum
+  (`"off"` | `"default"` | `"all"`); `"default"` only permits Marp's built-in HTML
+  allowlist, which does **not** include `<div>`, so only `"all"` enables `col-break`. The
+  CLI already gets HTML from the `marp.html: true` block in `package.json`; this brings the
+  preview to parity. Note that `"all"` only takes effect in a **trusted** workspace —
+  [VS Code Workspace Trust](https://code.visualstudio.com/docs/editor/workspace-trust)
+  forces it to `"off"` in untrusted workspaces — and it renders any raw HTML in a deck, so
+  leave decks from untrusted sources untrusted.
 
 ### Switching themes
 
@@ -110,6 +152,30 @@ class — that is the unstyled baseline.
 | `compare`   | Two labeled columns           | `# Title`, then exactly two `## Label` headings each with a list |
 | `closing`   | Quiet thank-you / "Questions?" | `# Questions?`                                              |
 | `tight`     | Utility: shrink type for dense slides | Combine with a layout, e.g. `<!-- _class: cols-2 tight -->` |
+| `invert`    | Utility: dark-mode token flip  | `class: invert` (front-matter) or `<!-- _class: invert -->`, combinable e.g. `_class: cols-2 invert` |
+| `top`       | Utility: pin content to top    | `<!-- _class: top -->`, combinable e.g. `_class: top center-x` |
+| `center-x`  | Utility: center text horizontally | `<!-- _class: center-x -->`, combinable e.g. `_class: top center-x` |
+
+### Utilities
+
+The kit adds a set of small, combinable utilities on top of the layouts above:
+
+- **`tight`** — shrinks type so dense slides fit. Stack it on any layout, e.g.
+  `<!-- _class: cols-2 tight -->`.
+- **`invert`** — dark mode. Flips the brand tokens (the accent stays). Apply per slide
+  with `<!-- _class: invert -->`, globally via front-matter `class: invert`, or combine
+  with a layout, e.g. `<!-- _class: cols-2 invert -->`.
+- **`col-break`** — forces a manual column break inside `cols-2` / `cols-3`. Split the
+  content into separate lists and drop an empty `<div class="col-break"></div>` where the
+  next column should start. This is the one place a `<div>` is needed, and it requires
+  HTML to be enabled (`marp.html: true` for builds, `markdown.marp.html: "all"` for
+  the VS Code preview — both already set up here).
+- **`top`** — pins content to the top of the slide instead of vertically centered. Works
+  even on full-bleed `![bg]` image slides. Combine with any layout, e.g.
+  `<!-- _class: top -->`.
+- **`center-x`** — centers text horizontally (the baseline is left-aligned). Combine with
+  `top` for a top-center slide: `<!-- _class: top center-x -->`. Note that `-` list bullet
+  markers stay left-pinned, so prefer headings/paragraphs over bullet lists when centering.
 
 Notes:
 
