@@ -8,5 +8,5 @@
     "./node_modules/marp-theme-kit/dist/rose-pine.css",
     "./node_modules/marp-theme-kit/dist/rose-pine-dawn.css"
   ],
-  "markdown.marp.enableHtml": true
+  "markdown.marp.html": "all"
 }

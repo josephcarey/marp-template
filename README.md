@@ -89,9 +89,9 @@ committed so the preview works out of the box:
     "./node_modules/marp-theme-kit/dist/rose-pine.css",
     "./node_modules/marp-theme-kit/dist/rose-pine-dawn.css"
   ],
-  // Render raw HTML (e.g. the col-break <div>) in the preview, matching the
-  // package.json `marp.html: true` used by the builds.
-  "markdown.marp.enableHtml": true
+  // Enable raw HTML (e.g. the col-break <div>) in the preview. "all" is required:
+  // "default" only allows Marp's built-in HTML allowlist, which excludes <div>.
+  "markdown.marp.html": "all"
 }
 ```
 
@@ -101,11 +101,15 @@ Two details matter:
   resolves by the registered theme _name_ (`base`), not by a relative file path. If
   `base.css` isn't registered, `theme: brand` renders without the layout contract in the
   preview.
-- **`enableHtml: true` is required** for the `col-break` utility's raw
-  `<div class="col-break"></div>` to render in the preview. The CLI already gets HTML from
-  the `marp.html: true` block in `package.json`; this brings the preview to parity. It does
-  mean any raw HTML in a deck is rendered in the preview, so disable it if you preview
-  decks from untrusted sources.
+- **`markdown.marp.html: "all"` is required** for the `col-break` utility's raw
+  `<div class="col-break"></div>` to render in the preview. This setting is an enum
+  (`"off"` | `"default"` | `"all"`); `"default"` only permits Marp's built-in HTML
+  allowlist, which does **not** include `<div>`, so only `"all"` enables `col-break`. The
+  CLI already gets HTML from the `marp.html: true` block in `package.json`; this brings the
+  preview to parity. Note that `"all"` only takes effect in a **trusted** workspace —
+  [VS Code Workspace Trust](https://code.visualstudio.com/docs/editor/workspace-trust)
+  forces it to `"off"` in untrusted workspaces — and it renders any raw HTML in a deck, so
+  leave decks from untrusted sources untrusted.
 
 ### Switching themes
 
@@ -162,7 +166,7 @@ The kit (v0.2.0+) adds two combinable utilities on top of the layouts above:
 - **`col-break`** — forces a manual column break inside `cols-2` / `cols-3`. Split the
   content into separate lists and drop an empty `<div class="col-break"></div>` where the
   next column should start. This is the one place a `<div>` is needed, and it requires
-  HTML to be enabled (`marp.html: true` for builds, `markdown.marp.enableHtml: true` for
+  HTML to be enabled (`marp.html: true` for builds, `markdown.marp.html: "all"` for
   the VS Code preview — both already set up here).
 
 Notes:
