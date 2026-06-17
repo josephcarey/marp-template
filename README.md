@@ -27,9 +27,14 @@ npm run build:all
 ```
 src/
   slides.md     # Your presentation (Markdown + Marp directives)
+  showcase.md   # Kitchen-sink demo: one slide per layout/utility (copy-paste reference)
   images/       # Image assets referenced from slides.md
 dist/           # Build output (generated; not committed)
 ```
+
+`src/slides.md` is the primary worked example (a short Trafalgar deck).
+`src/showcase.md` is a reference deck that exercises every `brand` layout and utility,
+one clearly-labeled slide each — build it with `npm run build:showcase`.
 
 ## Build scripts
 
@@ -39,8 +44,10 @@ dist/           # Build output (generated; not committed)
 | `npm run build:pdf`  | Build `dist/slides.pdf`.                                  |
 | `npm run build:pptx` | Build `dist/slides.pptx` (PowerPoint).                   |
 | `npm run build:all`  | Clean, then build HTML, PDF, and PPTX.                    |
+| `npm run build:showcase` | Build the showcase deck (`dist/showcase.{html,pdf,pptx}`). |
 | `npm run watch:html` | Rebuild HTML on changes.                                 |
 | `npm run preview`    | Open the Marp preview window.                            |
+| `npm run preview:showcase` | Open the Marp preview window for the showcase deck.|
 | `npm run clean`      | Remove the `dist/` directory.                            |
 
 Marp configuration (local-file access, HTML support) lives in the `marp` block of
@@ -189,7 +196,74 @@ Notes:
 - Suppress pagination on individual slides (e.g. title / closing) with
   `<!-- _paginate: false -->`.
 
-`src/slides.md` ships as a worked example of every layout above.
+`src/slides.md` ships as a worked example of every layout above. `src/showcase.md`
+is a companion reference deck with one labeled slide per layout/utility.
+
+## Reference
+
+A consolidated lookup for everything the kit ships. The `src/showcase.md` deck renders
+one slide per item below.
+
+### Themes
+
+Select a theme by name in front matter (`theme: <name>`). `base` is the foundation the
+custom themes `@import`; you don't select it directly.
+
+| Theme            | Select with             | Description                                                        |
+| ---------------- | ----------------------- | ----------------------------------------------------------------- |
+| `brand`          | `theme: brand`          | Default studio theme. Implements the full layout/utility contract. |
+| `academic`       | `theme: academic`       | Restrained, serif-leaning skin for papers and lectures.            |
+| `graph-paper`    | `theme: graph-paper`    | Grid-paper background skin for sketches and working sessions.      |
+| `palladium`      | `theme: palladium`      | Editorial skin. Adds extra grid classes `cols-4`, `cols-6`, `cols-12` on top of the base columns. |
+| `rose-pine`      | `theme: rose-pine`      | Warm dark Rosé Pine skin.                                          |
+| `rose-pine-dawn` | `theme: rose-pine-dawn` | Light Rosé Pine (Dawn) skin.                                       |
+
+> The skins restyle color and type but do **not** re-implement the layout contract — the
+> layout/utility classes below are a feature of the `brand` theme (plus palladium's extra
+> column counts).
+
+### Utilities & layouts
+
+Apply per-slide classes with `<!-- _class: name -->`; apply deck-wide classes via
+front-matter `class: name`. A plain title + bullets slide needs no class.
+
+| Class       | Scope                              | Usage note                                                                 |
+| ----------- | ---------------------------------- | -------------------------------------------------------------------------- |
+| `lead`      | per-slide (`_class`)               | Centered title slide: `# Title` + a paragraph subtitle.                    |
+| `statement` | per-slide (`_class`)               | One big centered punchline: `# A bold **statement**`.                      |
+| `cols-2`    | per-slide (`_class`)               | Two real CSS columns; one list flows across, headings span all columns.   |
+| `cols-3`    | per-slide (`_class`)               | Three CSS columns, same flow as `cols-2`.                                 |
+| `cols-4` / `cols-6` / `cols-12` | per-slide (`_class`)   | Extra column counts — **palladium theme only**.                            |
+| `col-break` | inline `<div>` utility             | Empty `<div class="col-break"></div>` forces a manual column break inside `cols-*`. Needs HTML enabled. |
+| `compare`   | per-slide (`_class`)               | Two labeled columns: exactly two `## Label` headings, each with a list.    |
+| `closing`   | per-slide (`_class`)               | Quiet thank-you / "Questions?" slide.                                      |
+| `tight`     | per-slide (`_class`), combinable   | Shrinks type for dense slides. Stack on a layout: `_class: cols-2 tight`.  |
+| `top`       | per-slide (`_class`), combinable   | Pins content to the top instead of vertical center.                       |
+| `center-x`  | per-slide (`_class`), combinable   | Centers text horizontally. Pair with `top`: `_class: top center-x`.       |
+| `invert`    | per-slide **or** deck-wide         | Dark mode (accent stays). `_class: invert` for one slide, or `class: invert` in front matter for the whole deck. Combinable: `_class: cols-2 invert`. |
+
+### `class` vs `_class` semantics
+
+- **Deck-wide** `class:` (no underscore, in front matter) carries forward onto every slide
+  — use it for `class: invert` to make the whole deck dark.
+- **Per-slide** `<!-- _class: … -->` **replaces** (does not merge with) the carried
+  deck-wide class on that slide. So if a deck sets `class: invert` and a slide needs its
+  own layout, restate the utility you want to keep, e.g. `<!-- _class: cols-2 invert -->`.
+- **Opt a single slide out** of the carried class with an empty value:
+  `<!-- _class: "" -->`.
+
+### `<!-- fit -->` auto-scaling _(requires a newer kit)_
+
+> **Requires `marp-theme-kit` ≥ the auto-scaling release (expected `v0.4.0`).** The pin in
+> this template is currently `v0.3.0`, where `<!-- fit -->` will **not** auto-scale as
+> intended. Bump the `marp-theme-kit` devDependency pin before relying on it.
+
+When available, mark a heading with the `fit` comment to scale it (and adjacent code/math)
+to fill the slide:
+
+```md
+# <!-- fit --> Big Auto-Sized Title
+```
 
 ## License
 
