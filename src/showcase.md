@@ -207,16 +207,15 @@ class: invert                  # whole deck (front-matter)
 
 ---
 
-# `<!-- fit -->` auto-scaling
+# <!-- fit --> Auto-Scaled Title
 
-> **Requires kit ≥ the auto-scaling release** (expected v0.4.0). Won't render as
-> intended on the pinned `v0.3.0` — bump the `marp-theme-kit` pin first.
-
-Scales a heading (and code/math) to fit the slide:
+The `fit` comment scales a heading (and adjacent code/math) to fill the slide.
 
 ```md
 # <!-- fit --> Big Auto-Sized Title
 ```
+
+> Requires `marp-theme-kit` ≥ `v0.4.0`.
 
 ---
 

@@ -61,7 +61,7 @@ This template gets its look from the published
 
 ```json
 "devDependencies": {
-  "marp-theme-kit": "github:josephcarey/marp-theme-kit#v0.3.0"
+  "marp-theme-kit": "github:josephcarey/marp-theme-kit#v0.4.0"
 }
 ```
 
@@ -252,14 +252,13 @@ front-matter `class: name`. A plain title + bullets slide needs no class.
 - **Opt a single slide out** of the carried class with an empty value:
   `<!-- _class: "" -->`.
 
-### `<!-- fit -->` auto-scaling _(requires a newer kit)_
+### `<!-- fit -->` auto-scaling
 
-> **Requires `marp-theme-kit` ≥ the auto-scaling release (expected `v0.4.0`).** The pin in
-> this template is currently `v0.3.0`, where `<!-- fit -->` will **not** auto-scale as
-> intended. Bump the `marp-theme-kit` devDependency pin before relying on it.
+> Requires `marp-theme-kit` ≥ `v0.4.0` (the pin in this template). Enabled in all kit
+> themes.
 
-When available, mark a heading with the `fit` comment to scale it (and adjacent code/math)
-to fill the slide:
+Mark a heading with the `fit` comment to scale it (and adjacent code/math) to fill the
+slide:
 
 ```md
 # <!-- fit --> Big Auto-Sized Title
