@@ -54,7 +54,7 @@ This template gets its look from the published
 
 ```json
 "devDependencies": {
-  "marp-theme-kit": "github:josephcarey/marp-theme-kit#v0.2.0"
+  "marp-theme-kit": "github:josephcarey/marp-theme-kit#v0.3.0"
 }
 ```
 
@@ -153,10 +153,12 @@ class — that is the unstyled baseline.
 | `closing`   | Quiet thank-you / "Questions?" | `# Questions?`                                              |
 | `tight`     | Utility: shrink type for dense slides | Combine with a layout, e.g. `<!-- _class: cols-2 tight -->` |
 | `invert`    | Utility: dark-mode token flip  | `class: invert` (front-matter) or `<!-- _class: invert -->`, combinable e.g. `_class: cols-2 invert` |
+| `top`       | Utility: pin content to top    | `<!-- _class: top -->`, combinable e.g. `_class: top center-x` |
+| `center-x`  | Utility: center text horizontally | `<!-- _class: center-x -->`, combinable e.g. `_class: top center-x` |
 
 ### Utilities
 
-The kit (v0.2.0+) adds two combinable utilities on top of the layouts above:
+The kit adds a set of small, combinable utilities on top of the layouts above:
 
 - **`tight`** — shrinks type so dense slides fit. Stack it on any layout, e.g.
   `<!-- _class: cols-2 tight -->`.
@@ -168,6 +170,12 @@ The kit (v0.2.0+) adds two combinable utilities on top of the layouts above:
   next column should start. This is the one place a `<div>` is needed, and it requires
   HTML to be enabled (`marp.html: true` for builds, `markdown.marp.html: "all"` for
   the VS Code preview — both already set up here).
+- **`top`** — pins content to the top of the slide instead of vertically centered. Works
+  even on full-bleed `![bg]` image slides. Combine with any layout, e.g.
+  `<!-- _class: top -->`.
+- **`center-x`** — centers text horizontally (the baseline is left-aligned). Combine with
+  `top` for a top-center slide: `<!-- _class: top center-x -->`. Note that `-` list bullet
+  markers stay left-pinned, so prefer headings/paragraphs over bullet lists when centering.
 
 Notes:
 
