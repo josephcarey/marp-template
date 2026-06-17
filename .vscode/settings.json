@@ -1,0 +1,12 @@
+{
+  "markdown.marp.themes": [
+    "./node_modules/marp-theme-kit/dist/base.css",
+    "./node_modules/marp-theme-kit/dist/brand.css",
+    "./node_modules/marp-theme-kit/dist/academic.css",
+    "./node_modules/marp-theme-kit/dist/graph-paper.css",
+    "./node_modules/marp-theme-kit/dist/palladium.css",
+    "./node_modules/marp-theme-kit/dist/rose-pine.css",
+    "./node_modules/marp-theme-kit/dist/rose-pine-dawn.css"
+  ],
+  "markdown.marp.enableHtml": true
+}
