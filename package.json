@@ -17,19 +17,24 @@
   },
   "homepage": "https://github.com/josephcarey/marp-template#readme",
   "scripts": {
-    "build:all": "npm run clean && npm run build:html && npm run build:pdf && npm run build:pptx",
+    "build:all": "npm run clean && npm run build:html && npm run build:pdf && npm run build:pptx && npm run build:showcase",
     "build:html": "marp src/slides.md --theme-set node_modules/marp-theme-kit/dist -o dist/slides.html && npm run copy-images",
     "build:pdf": "marp src/slides.md --theme-set node_modules/marp-theme-kit/dist --pdf -o dist/slides.pdf",
     "build:pptx": "marp src/slides.md --theme-set node_modules/marp-theme-kit/dist --pptx -o dist/slides.pptx",
+    "build:showcase": "npm run build:showcase:html && npm run build:showcase:pdf && npm run build:showcase:pptx",
+    "build:showcase:html": "marp src/showcase.md --theme-set node_modules/marp-theme-kit/dist -o dist/showcase.html && npm run copy-images",
+    "build:showcase:pdf": "marp src/showcase.md --theme-set node_modules/marp-theme-kit/dist --pdf -o dist/showcase.pdf",
+    "build:showcase:pptx": "marp src/showcase.md --theme-set node_modules/marp-theme-kit/dist --pptx -o dist/showcase.pptx",
     "clean": "shx rm -rf dist",
     "copy-images": "shx cp -r src/images dist/images",
     "preview": "marp src/slides.md --theme-set node_modules/marp-theme-kit/dist --preview",
+    "preview:showcase": "marp src/showcase.md --theme-set node_modules/marp-theme-kit/dist --preview",
     "test": "echo \"Error: no test specified\" && exit 1",
     "watch:html": "marp src/slides.md --theme-set node_modules/marp-theme-kit/dist -o dist/slides.html --watch"
   },
   "devDependencies": {
     "@marp-team/marp-cli": "^4.4.0",
-    "marp-theme-kit": "github:josephcarey/marp-theme-kit#v0.3.0",
+    "marp-theme-kit": "github:josephcarey/marp-theme-kit#v0.4.0",
     "shx": "^0.3.4"
   },
   "marp": {
